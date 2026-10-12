@@ -84,7 +84,7 @@ if (!reduceMotion && cards.length > 1) {
 // Browsers only allow audio after a click, tap or key press, so we unlock on the very first one
 // anywhere on the page, and show a small "Turn on sound" pill while Career is on screen.
 if (cards.length) {
-  const sfxUrl = '/assets/sfx/paper-slide.mp3';
+  const sfxUrl = 'assets/sfx/paper-slide.mp3';
   const AC = window.AudioContext || window.webkitAudioContext;
   let ctx = null, buffer = null;
   const raw = fetch(sfxUrl).then((r) => r.arrayBuffer()).catch(() => null); // preload now
