@@ -12,16 +12,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Host+Grotesk:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles.css?v=32">
+  <link rel="stylesheet" href="/styles.css?v=42">
 </head>
 <body>
   <header class="nav wrap">
-    <a class="nav__name" href="/">Izuddin Helmi</a>
+    <div class="nav__id"><a class="nav__name" href="/">Izuddin Helmi</a><p class="nav__tag mono muted">Ex-Grab, PETRONAS &amp; Jupiter — designing since 2013</p></div>
     <p class="nav__meta mono">Product designer<br>Kuala Lumpur, GMT+8</p>
-    <nav class="nav__links mono" aria-label="Sections">
-      <a href="#lab">Lab</a>, <a href="#career">Career</a>,<br>
-      <a href="#services">Services</a>, <a href="#contact">Contact</a>
-    </nav>
     <p class="nav__status mono"><span class="dot" aria-hidden="true"></span>Booking Q1 2027<br>2 slots left</p>
     <a class="btn btn--ink nav__cta" href="#contact">Start a project <span class="arw">↗</span></a>
   </header>
@@ -32,10 +28,8 @@
       <p class="hero__status mono"><span class="dot" aria-hidden="true"></span>Booking Q1 2027 · 2 slots left</p>
       <h1 class="hero__title">Dashboards<br>&amp; mobile apps<br><span class="hero__spec">specialist</span><span class="accent">.</span></h1>
       <div class="hero__sub">
-        <p class="mono muted">(Ex-Grab, PETRONAS &amp; Jupiter — designing since 2013)</p>
         <p class="hero__lede">Thirteen years designing products at Grab, PETRONAS, KATSANA and Jupiter. Now independent — I help teams turn complicated operations into software people genuinely like using.</p>
       </div>
-      <p class="terms">Engagements start at <strong>RM20,000</strong> and usually run <strong>6–10 weeks</strong>, for <strong>web, iOS and Android</strong>. Send a brief and you’ll hear back <strong>within 24 hours</strong>.</p>
     </section>
 
     <!-- Lab: horizontal showcase of personal (vibecoded) projects -->
@@ -119,8 +113,8 @@
       <div class="career__list">
 
       <a class="role-mini" href="#lab">
-        <span class="mono accent">2025 — Now</span>
-        <span class="role-mini__title">Independent <span class="muted">Izu Labs Resources, Kuala Lumpur</span></span>
+        <span class="mono accent role-mini__now"><span class="live-dot" aria-hidden="true"></span>2025 — Now</span>
+        <span class="role-mini__title">Independent Builder <span class="muted">Izu Labs Resources, Kuala Lumpur</span></span>
         <span class="role-mini__desc">Building my own products — see the Lab above — and taking on select client work.</span>
         <span class="role-mini__arrow" aria-hidden="true">↑</span>
       </a>
@@ -183,7 +177,7 @@
             <a class="btn btn--light card__cta" href="mailto:hello@izuddinhelmi.me?subject=Case%20study%3A%20Duriana">Request case study <span class="arw">↗</span></a>
           </div>
           <div class="card__visual card__visual--comp">
-            <img src="/assets/career/duriana.png?v=4" width="2040" height="1960" style="--w:1020" alt="Duriana marketplace screens: product listing, product page with make offer, offers inbox and seller profile" loading="lazy">
+            <img src="/assets/career/duriana.png?v=6" width="1920" height="1960" style="--w:960" alt="Duriana web marketplace with listings, and mobile listing and product screens" loading="lazy">
           </div>
         </li>
         <li class="card card--lav" style="--i:5">
@@ -222,18 +216,11 @@
       </div>
       </div>
     </section>
-    <section class="logos wrap" aria-label="Companies">
-      <p class="mono muted">Where I’ve designed</p>
-      <ul>
-        <li>Grab</li><li>PETRONAS</li><li>Jupiter</li><li>KATSANA</li><li>Mindvalley</li><li>Duriana</li>
-      </ul>
-    </section>
-
     <!-- Services -->
     <section class="services wrap" id="services" aria-labelledby="svc-title">
       <div class="services__head">
         <h2 id="svc-title" class="display-3">Got an app to build?</h2>
-        <p class="services__lede">From a rough idea to a product that’s outgrown its first design. Projects start at RM20,000.</p>
+        <p class="services__lede">From a rough idea to a product that’s outgrown its first design. Engagements start at <strong>RM20,000</strong> and usually run <strong>6–10 weeks</strong>, for <strong>web, iOS and Android</strong>. Send a brief and you’ll hear back <strong>within 24 hours</strong>.</p>
       </div>
       <ol class="svc">
         <li><span class="svc__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg></span><h3>“We have an idea, not a product yet.”</h3><p>Workshops, user interviews and a clickable prototype you can show investors or your team. 2–3 weeks.</p></li>
@@ -265,7 +252,8 @@
     <span>Kuala Lumpur, <time id="kl-time">—</time></span>
   </footer>
 
+  <button class="sound-pill mono" type="button" hidden><span class="sound-pill__bars" aria-hidden="true"><i></i><i></i><i></i></span>Turn on sound</button>
   <div class="cursor mono" aria-hidden="true">Case<br>study</div>
-  <script src="/main.js?v=7" defer></script>
+  <script src="/main.js?v=10" defer></script>
 </body>
 </html>

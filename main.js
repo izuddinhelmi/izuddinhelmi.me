@@ -80,6 +80,60 @@ if (!reduceMotion && cards.length > 1) {
   update();
 }
 
+// Paper "slide" sound each time a career card lands in its stacked position.
+// Browsers only allow audio after a click, tap or key press, so we unlock on the very first one
+// anywhere on the page, and show a small "Turn on sound" pill while Career is on screen.
+if (cards.length) {
+  const sfxUrl = '/assets/sfx/paper-slide.mp3';
+  const AC = window.AudioContext || window.webkitAudioContext;
+  let ctx = null, buffer = null;
+  const raw = fetch(sfxUrl).then((r) => r.arrayBuffer()).catch(() => null); // preload now
+  const pill = document.querySelector('.sound-pill');
+  const gestures = ['pointerdown', 'pointerup', 'click', 'keydown', 'touchstart', 'touchend'];
+  const ready = () => ctx && ctx.state === 'running';
+
+  const play = () => {
+    if (!ready() || !buffer) return;
+    const src = ctx.createBufferSource(); const gain = ctx.createGain();
+    gain.gain.value = 0.3; src.buffer = buffer; src.connect(gain).connect(ctx.destination); src.start();
+  };
+
+  // Must run synchronously inside the gesture (iOS Safari needs a sound started right there)
+  const unlock = () => {
+    if (!AC) return;
+    try {
+      ctx = ctx || new AC();
+      ctx.resume();
+      const silent = ctx.createBufferSource(); silent.buffer = ctx.createBuffer(1, 1, 22050);
+      silent.connect(ctx.destination); silent.start(0);
+    } catch (e) { return; }
+    if (!buffer) raw.then((ab) => ab && ctx.decodeAudioData(ab)).then((b) => { if (b) buffer = b; });
+    setTimeout(() => {
+      if (ready()) { gestures.forEach((t) => window.removeEventListener(t, unlock, true)); if (pill) pill.hidden = true; }
+    }, 50);
+  };
+  gestures.forEach((t) => window.addEventListener(t, unlock, { capture: true, passive: true }));
+
+  if (pill) {
+    pill.addEventListener('click', () => { setTimeout(() => { play(); pill.hidden = true; }, 120); });
+    const career = document.getElementById('career');
+    new IntersectionObserver(([e]) => { pill.hidden = !e.isIntersecting || ready(); }, { threshold: 0.05 }).observe(career);
+  }
+
+  const landed = cards.map(() => false);
+  const check = () => {
+    cards.forEach((card, i) => {
+      if (i === 0) return; // the first card doesn't slide over anything
+      const top = parseFloat(getComputedStyle(card).top) || 0;
+      const isLanded = card.getBoundingClientRect().top <= top + 1;
+      if (isLanded && !landed[i]) play();
+      landed[i] = isLanded;
+    });
+  };
+  window.addEventListener('scroll', check, { passive: true });
+  check();
+}
+
 // "Case study" cursor disc over project cards (fine pointers only)
 const cursor = document.querySelector('.cursor');
 if (cursor && window.matchMedia('(pointer: fine)').matches && !reduceMotion) {

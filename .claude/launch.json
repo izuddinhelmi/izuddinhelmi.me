@@ -4,13 +4,22 @@
     {
       "name": "site",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "4321"],
+      "runtimeArgs": [
+        ".claude/dev-server.py",
+        "4321"
+      ],
       "port": 4321
     },
     {
       "name": "sref-build",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "4322", "--directory", "/Users/izuddinhelmi/Sites/SREF/out"],
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4322",
+        "--directory",
+        "/Users/izuddinhelmi/Sites/SREF/out"
+      ],
       "port": 4322
     }
   ]
