@@ -121,14 +121,17 @@ if (cards.length) {
   }
 
   const landed = cards.map(() => false);
+  // Plays when a card lands (scrolling down) and when it lifts off again (scrolling up)
   const check = () => {
+    let changed = false;
     cards.forEach((card, i) => {
       if (i === 0) return; // the first card doesn't slide over anything
       const top = parseFloat(getComputedStyle(card).top) || 0;
       const isLanded = card.getBoundingClientRect().top <= top + 1;
-      if (isLanded && !landed[i]) play();
+      if (isLanded !== landed[i]) changed = true;
       landed[i] = isLanded;
     });
+    if (changed) play(); // once per frame, even if a fast scroll moves several cards
   };
   window.addEventListener('scroll', check, { passive: true });
   check();

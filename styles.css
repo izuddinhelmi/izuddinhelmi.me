@@ -145,15 +145,16 @@ ol, ul { padding: 0; list-style: none; }
 .lab__frame--peach { background: var(--peach); }
 
 /* Mobile-app slides: three phone screens, cropped to the top, bleeding off the bottom */
-.lab__frame--phones { display: flex; justify-content: center; align-items: flex-start; gap: 4%; padding: 6% 6% 0; }
+.lab__frame--phones { display: flex; justify-content: center; align-items: flex-start; gap: 3%; padding: 6% 5% 0; }
 .lab__frame--phones img {
-  width: 27%; aspect-ratio: 440 / 956; object-fit: cover; object-position: top;
+  width: 21%; aspect-ratio: 440 / 956; object-fit: cover; object-position: top;
   border-radius: 13% / 6%;
   box-shadow: 0 30px 60px -24px rgb(27 28 30 / .5);
 }
 .lab__frame--phones img:nth-child(odd) { margin-top: 7%; }
 .lab__frame--phones:hover img:nth-child(2) { transition-delay: .05s; }
 .lab__frame--phones:hover img:nth-child(3) { transition-delay: .1s; }
+.lab__frame--phones:hover img:nth-child(4) { transition-delay: .15s; }
 .lab__placeholder {
   display: grid; place-content: center; gap: 10px; text-align: center;
   aspect-ratio: 16 / 10; background: var(--bg);
@@ -435,8 +436,8 @@ a.role-mini:hover .role-mini__arrow { transform: translateY(-4px); }
   .lab__slide { flex-basis: calc(var(--wrapw) * .86); }
   .lab__frame { aspect-ratio: 4 / 3.4; padding: 24px 0 0 24px; }
   .lab__frame img, .lab__placeholder { width: 170%; max-width: none; border-radius: 12px 0 0 0; }
-  .lab__frame--phones { padding: 20px 16px 0; gap: 10px; }
-  .lab__frame--phones img { width: 31%; border-radius: 13% / 6%; }
+  .lab__frame--phones { padding: 20px 12px 0; gap: 6px; }
+  .lab__frame--phones img { width: 23.5%; border-radius: 13% / 6%; }
   .lab__frame:hover img, .lab__frame:hover .lab__placeholder { transform: none; }
   .lab__caption { flex-direction: column; align-items: flex-start; gap: 10px; }
   .lab__caption p { font-size: 14px; }
