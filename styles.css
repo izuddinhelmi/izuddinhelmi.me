@@ -175,22 +175,35 @@ ol, ul { padding: 0; list-style: none; }
 
 /* Mobile-app slides: three phone screens, cropped to the top, bleeding off the bottom */
 .lab__frame--phones { display: flex; justify-content: center; align-items: flex-start; gap: 3%; padding: 6% 5% 0; }
-.lab__frame--phones img {
-  width: 21%; aspect-ratio: 440 / 956; object-fit: cover; object-position: top;
-  border-radius: 13% / 6%;
-  box-shadow: 0 30px 60px -24px rgb(27 28 30 / .5);
+/* Each screenshot sits in an iPhone body: dark bezel, a thin metal edge and side buttons */
+.lab__frame--phones .phone {
+  position: relative; flex: none; width: 21%; padding: .9%;
+  background: #121314; border-radius: 15% / 7%;
+  box-shadow:
+    inset 0 0 0 1.5px #4A4C50, inset 0 0 0 3px #1E1F21,
+    0 30px 60px -24px rgb(27 28 30 / .55);
+  animation: phone-float var(--dur, 6s) ease-in-out var(--delay, 0s) infinite alternate;
+  transition: transform .6s cubic-bezier(.2,.7,.2,1);
 }
-.lab__frame--phones img:nth-child(odd) { margin-top: 7%; }
+.lab__frame--phones .phone::before, .lab__frame--phones .phone::after {
+  content: ""; position: absolute; width: 2px; border-radius: 2px; background: #3A3C40;
+}
+.lab__frame--phones .phone::before { left: -2px; top: 18%; height: 7%; } /* volume */
+.lab__frame--phones .phone::after { right: -2px; top: 24%; height: 11%; } /* power */
+.lab__frame--phones .phone img {
+  display: block; width: 100%; aspect-ratio: 440 / 956; object-fit: cover; object-position: top;
+  border-radius: 12.5% / 5.8%; box-shadow: none; transform: none !important;
+}
+.lab__frame--phones .phone:nth-child(odd) { margin-top: 7%; }
+
 /* Each phone drifts up and down on its own slow cycle (timings set per phone in main.js).
    Uses `translate` so it stacks with the hover lift, which uses `transform`. */
 @keyframes phone-float { from { translate: 0 calc(var(--float, 8px) * -1); } to { translate: 0 var(--float, 8px); } }
-.lab__frame--phones img {
-  animation: phone-float var(--dur, 6s) ease-in-out var(--delay, 0s) infinite alternate;
-}
-@media (prefers-reduced-motion: reduce) { .lab__frame--phones img { animation: none; } }
-.lab__frame--phones:hover img:nth-child(2) { transition-delay: .05s; }
-.lab__frame--phones:hover img:nth-child(3) { transition-delay: .1s; }
-.lab__frame--phones:hover img:nth-child(4) { transition-delay: .15s; }
+@media (prefers-reduced-motion: reduce) { .lab__frame--phones .phone { animation: none; } }
+.lab__frame--phones:hover .phone { transform: translateY(-10px); }
+.lab__frame--phones:hover .phone:nth-child(2) { transition-delay: .05s; }
+.lab__frame--phones:hover .phone:nth-child(3) { transition-delay: .1s; }
+.lab__frame--phones:hover .phone:nth-child(4) { transition-delay: .15s; }
 .lab__placeholder {
   display: grid; place-content: center; gap: 10px; text-align: center;
   aspect-ratio: 16 / 10; background: var(--bg);
@@ -477,7 +490,8 @@ a.role-mini:hover .role-mini__arrow { transform: translateY(-4px); }
   .browser__bar { height: 24px; }
   .browser__bar span { left: 30%; }
   .lab__frame--phones { padding: 20px 12px 0; gap: 6px; }
-  .lab__frame--phones img { width: 23.5%; border-radius: 13% / 6%; }
+  .lab__frame--phones .phone { width: 23.5%; padding: 1.2%; }
+  .lab__frame:hover .phone { transform: none; }
   .lab__frame:hover img, .lab__frame:hover video, .lab__frame:hover .lab__placeholder { transform: none; }
   .lab__caption { flex-direction: column; align-items: flex-start; gap: 10px; }
   .lab__caption p { font-size: 14px; }

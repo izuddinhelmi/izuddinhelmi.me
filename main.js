@@ -73,11 +73,11 @@ if (track) {
 }
 
 // Floating phones: give each its own drift, speed and starting point so they never move in step
-document.querySelectorAll('.lab__frame--phones img').forEach((img) => {
+document.querySelectorAll('.lab__frame--phones .phone').forEach((phone) => {
   const dur = 4.5 + Math.random() * 3.5; // seconds per rise or fall
-  img.style.setProperty('--dur', `${dur.toFixed(2)}s`);
-  img.style.setProperty('--delay', `${(-Math.random() * dur * 2).toFixed(2)}s`);
-  img.style.setProperty('--float', `${(5 + Math.random() * 5).toFixed(1)}px`);
+  phone.style.setProperty('--dur', `${dur.toFixed(2)}s`);
+  phone.style.setProperty('--delay', `${(-Math.random() * dur * 2).toFixed(2)}s`);
+  phone.style.setProperty('--float', `${(5 + Math.random() * 5).toFixed(1)}px`);
 });
 
 // Stacked cards: as the next card slides over, shrink and dim the one underneath
