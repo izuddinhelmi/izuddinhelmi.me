@@ -87,10 +87,11 @@ if (track) {
   track.addEventListener('click', (e) => { if (moved) { e.preventDefault(); moved = false; } }, true);
 }
 
-// Lab videos load only when their card scrolls into view, and pause while it's off screen
+// Lab videos load only when their card scrolls into view, and pause while it's off screen (phones get the 720p copy)
+const phone = window.matchMedia('(max-width: 700px)');
 const lazyVideos = new IntersectionObserver((entries) => entries.forEach(({ target: v, isIntersecting }) => {
   if (!isIntersecting) { v.pause(); return; }
-  if (!v.getAttribute('src')) v.src = v.dataset.src;
+  if (!v.getAttribute('src')) v.src = (phone.matches && v.dataset.srcPhone) || v.dataset.src;
   v.play().catch(() => {});
 }), { threshold: 0.1 });
 document.querySelectorAll('video[data-src]').forEach((v) => lazyVideos.observe(v));
