@@ -86,7 +86,7 @@ if (!reduceMotion && cards.length > 1) {
 if (cards.length) {
   const sfxUrl = 'assets/sfx/paper-slide.mp3';
   const AC = window.AudioContext || window.webkitAudioContext;
-  let ctx = null, buffer = null;
+  let ctx = null, buffer = null, decoding = null;
   const raw = fetch(sfxUrl).then((r) => r.arrayBuffer()).catch(() => null); // preload now
   const pill = document.querySelector('.sound-pill');
   const gestures = ['pointerdown', 'pointerup', 'click', 'keydown', 'touchstart', 'touchend'];
@@ -107,7 +107,8 @@ if (cards.length) {
       const silent = ctx.createBufferSource(); silent.buffer = ctx.createBuffer(1, 1, 22050);
       silent.connect(ctx.destination); silent.start(0);
     } catch (e) { return; }
-    if (!buffer) raw.then((ab) => ab && ctx.decodeAudioData(ab)).then((b) => { if (b) buffer = b; });
+    // Decode once: decodeAudioData detaches the ArrayBuffer, so a second call would throw
+    decoding = decoding || raw.then((ab) => ab && ctx.decodeAudioData(ab)).then((b) => { if (b) buffer = b; }).catch(() => {});
     setTimeout(() => {
       if (ready()) { gestures.forEach((t) => window.removeEventListener(t, unlock, true)); if (pill) pill.hidden = true; }
     }, 50);
