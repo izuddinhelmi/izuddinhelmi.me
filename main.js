@@ -101,7 +101,17 @@ document.querySelectorAll('.lab__frame--phones .phone').forEach((phone) => {
   const dur = 4.5 + Math.random() * 3.5; // seconds per rise or fall
   phone.style.setProperty('--dur', `${dur.toFixed(2)}s`);
   phone.style.setProperty('--delay', `${(-Math.random() * dur * 2).toFixed(2)}s`);
-  phone.style.setProperty('--float', `${(5 + Math.random() * 5).toFixed(1)}px`);
+  phone.style.setProperty('--float', `${(11 + Math.random() * 6).toFixed(1)}px`);
+});
+// ...and arrive one by one once their screenshots have loaded and the card is on screen
+document.querySelectorAll('.lab__frame--phones').forEach((frame) => {
+  const imgs = [...frame.querySelectorAll('img')];
+  const loaded = Promise.all(imgs.map((img) => (img.complete ? null : img.decode().catch(() => {}))));
+  new IntersectionObserver(([e], io) => {
+    if (!e.isIntersecting) return;
+    io.disconnect();
+    loaded.then(() => frame.classList.add('is-in'));
+  }, { threshold: 0.15 }).observe(frame);
 });
 
 // Stacked cards: as the next card slides over, shrink and dim the one underneath

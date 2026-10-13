@@ -221,7 +221,24 @@ ol, ul { padding: 0; list-style: none; }
 /* Each phone drifts up and down on its own slow cycle (timings set per phone in main.js).
    Uses `translate` so it stacks with the hover lift, which uses `transform`. */
 @keyframes phone-float { from { translate: 0 calc(var(--float, 8px) * -1); } to { translate: 0 var(--float, 8px); } }
-@media (prefers-reduced-motion: reduce) { .lab__frame--phones .phone { animation: none; } }
+/* On load the phones arrive one by one: fade in, rise a little and come into focus, no overshoot.
+   It animates transform/opacity/filter, so it runs alongside the float, which uses translate. */
+@keyframes phone-in {
+  from { opacity: 0; transform: translateY(56px) scale(.97); filter: blur(8px); }
+  to { opacity: 1; transform: none; filter: blur(0); }
+}
+.js .lab__frame--phones:not(.is-in) .phone { opacity: 0; }
+.lab__frame--phones.is-in .phone {
+  animation:
+    phone-in 1.2s cubic-bezier(.22, .9, .3, 1) calc(.15s + var(--i, 0) * .2s) backwards,
+    phone-float var(--dur, 6s) ease-in-out var(--delay, 0s) infinite alternate;
+}
+.lab__frame--phones .phone:nth-child(2) { --i: 1; }
+.lab__frame--phones .phone:nth-child(3) { --i: 2; }
+.lab__frame--phones .phone:nth-child(4) { --i: 3; }
+@media (prefers-reduced-motion: reduce) {
+  .lab__frame--phones .phone, .lab__frame--phones.is-in .phone { animation: none; opacity: 1; }
+}
 .lab__frame--phones:hover .phone { transform: translateY(-10px); }
 .lab__frame--phones:hover .phone:nth-child(2) { transition-delay: .05s; }
 .lab__frame--phones:hover .phone:nth-child(3) { transition-delay: .1s; }
@@ -439,8 +456,8 @@ a.role-mini:hover .role-mini__arrow { transform: translateY(-4px); }
 /* Custom cursor over cards */
 .cursor {
   position: fixed; left: 0; top: 0; z-index: 50; pointer-events: none;
-  display: grid; place-items: center; width: 84px; height: 84px; border-radius: 50%;
-  background: var(--ink); color: var(--bg); font-weight: 500;
+  display: grid; place-items: center; width: 108px; height: 108px; border-radius: 50%;
+  background: var(--ink); color: var(--bg); font-weight: 500; font-size: 13px; text-align: center;
   transform: translate(-50%, -50%) scale(0); transition: transform .2s ease;
 }
 .cursor.is-on { transform: translate(-50%, -50%) scale(1); }
