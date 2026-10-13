@@ -145,6 +145,34 @@ ol, ul { padding: 0; list-style: none; }
 .lab__frame video { display: block; height: auto; object-fit: cover; }
 .lab__frame--peach { background: var(--peach); }
 
+/* Desktop slides: the screenshot sits in a minimal browser window resting on the card's bottom edge.
+   On hover the window grows to fill the whole card. */
+.lab__frame--browser {
+  display: flex; align-items: flex-end; padding: 0 7%;
+  transition: padding .6s cubic-bezier(.2,.7,.2,1);
+}
+.browser {
+  display: flex; flex-direction: column; width: 100%; height: 88%;
+  overflow: hidden; border-radius: 14px 14px 0 0; background: #F7F7F4;
+  box-shadow: 0 30px 60px -30px rgb(27 28 30 / .45);
+  transition: height .6s cubic-bezier(.2,.7,.2,1), border-radius .6s cubic-bezier(.2,.7,.2,1);
+}
+.lab__frame--browser .browser img, .lab__frame--browser .browser video {
+  display: block; flex: 1 1 0; min-height: 0; width: 100%; object-fit: cover; object-position: top center;
+  border-radius: 0; box-shadow: none; transform: none !important;
+}
+@media (hover: hover) {
+  .lab__frame--browser:hover { padding: 0; }
+  .lab__frame--browser:hover .browser { height: 100%; border-radius: var(--radius-xl); }
+}
+.browser__bar { position: relative; flex: none; display: flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; border-bottom: 1px solid rgb(27 28 30 / .07); }
+.browser__bar i { width: 9px; height: 9px; border-radius: 50%; background: #D9D9D4; }
+.browser__bar span {
+  position: absolute; left: 50%; transform: translateX(-50%); max-width: 60%;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font-size: 11px; color: var(--muted); background: #ECECE8; padding: 3px 14px; border-radius: 6px;
+}
+
 /* Mobile-app slides: three phone screens, cropped to the top, bleeding off the bottom */
 .lab__frame--phones { display: flex; justify-content: center; align-items: flex-start; gap: 3%; padding: 6% 5% 0; }
 .lab__frame--phones img {
@@ -153,6 +181,13 @@ ol, ul { padding: 0; list-style: none; }
   box-shadow: 0 30px 60px -24px rgb(27 28 30 / .5);
 }
 .lab__frame--phones img:nth-child(odd) { margin-top: 7%; }
+/* Each phone drifts up and down on its own slow cycle (timings set per phone in main.js).
+   Uses `translate` so it stacks with the hover lift, which uses `transform`. */
+@keyframes phone-float { from { translate: 0 calc(var(--float, 8px) * -1); } to { translate: 0 var(--float, 8px); } }
+.lab__frame--phones img {
+  animation: phone-float var(--dur, 6s) ease-in-out var(--delay, 0s) infinite alternate;
+}
+@media (prefers-reduced-motion: reduce) { .lab__frame--phones img { animation: none; } }
 .lab__frame--phones:hover img:nth-child(2) { transition-delay: .05s; }
 .lab__frame--phones:hover img:nth-child(3) { transition-delay: .1s; }
 .lab__frame--phones:hover img:nth-child(4) { transition-delay: .15s; }
@@ -437,6 +472,10 @@ a.role-mini:hover .role-mini__arrow { transform: translateY(-4px); }
   .lab__slide { flex-basis: calc(var(--wrapw) * .86); }
   .lab__frame { aspect-ratio: 4 / 3.4; padding: 24px 0 0 24px; }
   .lab__frame img, .lab__frame video, .lab__placeholder { width: 170%; max-width: none; border-radius: 12px 0 0 0; }
+  .lab__frame--browser { padding: 0 0 0 24px; }
+  .lab__frame--browser .browser { width: 170%; height: 92%; flex: none; border-radius: 12px 0 0 0; }
+  .browser__bar { height: 24px; }
+  .browser__bar span { left: 30%; }
   .lab__frame--phones { padding: 20px 12px 0; gap: 6px; }
   .lab__frame--phones img { width: 23.5%; border-radius: 13% / 6%; }
   .lab__frame:hover img, .lab__frame:hover video, .lab__frame:hover .lab__placeholder { transform: none; }

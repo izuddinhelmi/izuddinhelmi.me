@@ -16,12 +16,29 @@ if (track) {
   const pad = (n) => String(n).padStart(2, '0');
   const step = () => slides[0].getBoundingClientRect().width + parseFloat(getComputedStyle(track).columnGap || 0);
   const current = () => Math.min(slides.length - 1, Math.round(track.scrollLeft / step()));
+  // A slide's video plays with sound only while it's the active slide and the Lab is on screen.
+  // Browsers keep sound off until the visitor has clicked, tapped or pressed a key somewhere.
+  const videos = slides.map((s) => s.querySelector('video'));
+  let active = 0, labOnScreen = false, interacted = false;
+  const voice = () => videos.forEach((v, j) => {
+    if (!v) return;
+    const on = interacted && labOnScreen && j === active;
+    v.muted = !on;
+    if (on) { v.volume = 0.6; v.play().catch(() => {}); }
+  });
+  ['pointerdown', 'keydown', 'touchstart'].forEach((t) => window.addEventListener(t, () => {
+    if (!interacted) { interacted = true; voice(); }
+  }, { capture: true, passive: true }));
+  new IntersectionObserver(([e]) => { labOnScreen = e.isIntersecting; voice(); }, { threshold: 0.5 })
+    .observe(track);
+
   const sync = () => {
     const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 2;
     const i = atEnd ? slides.length - 1 : current();
     if (count) count.textContent = `${pad(i + 1)} / ${pad(slides.length)}`;
     if (prevBtn) prevBtn.disabled = track.scrollLeft <= 2;
     if (nextBtn) nextBtn.disabled = atEnd;
+    if (i !== active) { active = i; voice(); }
   };
   const behavior = reduceMotion ? 'auto' : 'smooth';
   [prevBtn, nextBtn].forEach((btn) => btn?.addEventListener('click', () => {
@@ -54,6 +71,14 @@ if (track) {
   // Swallow the click that ends a drag so it doesn't open the project
   track.addEventListener('click', (e) => { if (moved) { e.preventDefault(); moved = false; } }, true);
 }
+
+// Floating phones: give each its own drift, speed and starting point so they never move in step
+document.querySelectorAll('.lab__frame--phones img').forEach((img) => {
+  const dur = 4.5 + Math.random() * 3.5; // seconds per rise or fall
+  img.style.setProperty('--dur', `${dur.toFixed(2)}s`);
+  img.style.setProperty('--delay', `${(-Math.random() * dur * 2).toFixed(2)}s`);
+  img.style.setProperty('--float', `${(5 + Math.random() * 5).toFixed(1)}px`);
+});
 
 // Stacked cards: as the next card slides over, shrink and dim the one underneath
 const cards = [...document.querySelectorAll('.card')];
