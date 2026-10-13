@@ -479,17 +479,18 @@ function layout() {
   if (TV) dpr = Math.min(dpr, 1280 / Math.max(1, r.width));
   canvas.width = Math.max(1, Math.round(r.width * dpr));
   canvas.height = Math.max(1, Math.round(r.height * dpr));
-  // Fit the whole island above the live panels so the garden isn't hidden by them.
-  const panelTops = [...document.querySelectorAll('.hud-panel')]
+  // Fill the window: the island runs under the corner panels, which only cover its empty edges.
+  // On phones the team list sits below, so there the island still fits above it.
+  const top = 40;
+  const panelTops = r.width > 700 ? [] : [...document.querySelectorAll('.hud-panel')]
     .map(panel => panel.getBoundingClientRect())
     .filter(panel => panel.width && panel.height)
     .map(panel => panel.top - r.top - 8);
   const viewHeight = Math.max(180, Math.min(r.height, ...panelTops));
-  let fit = Math.min(r.width / BASE_W, viewHeight / BASE_H);
-  if (fit >= 2) fit = Math.floor(fit);
+  const fit = Math.min(r.width / BASE_W, (viewHeight - top) / BASE_H);
   S = fit * dpr;
   offX = Math.round((canvas.width - BASE_W * S) / 2);
-  offY = Math.round((viewHeight * dpr - BASE_H * S) / 2);
+  offY = Math.round((top * dpr + (viewHeight - top) * dpr - BASE_H * S) / 2);
   uiK = dpr * Math.min(1.25, Math.max(0.8, fit / 1.3));
 }
 new ResizeObserver(layout).observe(stage);

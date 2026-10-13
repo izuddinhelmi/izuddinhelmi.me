@@ -324,3 +324,13 @@ body.tv.idle, body.tv.idle canvas { cursor: none; }
 body.tv.idle #fullBtn { opacity: 0; pointer-events: none; }
 #fullBtn { transition: opacity .4s; }
 #fullBtn[hidden] { display: none; }
+
+/* ---------------------------------------------------------------- corner panels
+   Team bottom-left and Activity bottom-right, both narrow, so the island fills the middle. */
+@media (min-width: 701px) {
+  .hud-team, .hud-activity { width: 340px; height: clamp(180px, 34vh, 340px); }
+  .hud-team #agents { flex-direction: column; flex-wrap: nowrap; }
+  .hud-team .card, .hud-team .card.sel { width: 100%; }
+}
+/* Phones: the old 58vh stage height left the bottom of the screen empty; fill it. */
+@media (max-width: 860px) { .stage { height: auto; } }
