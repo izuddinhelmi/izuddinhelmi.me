@@ -197,6 +197,27 @@ ol, ul { padding: 0; list-style: none; }
 
 /* Mobile-app slides: three phone screens, cropped to the top, bleeding off the bottom */
 .lab__frame--phones { display: flex; justify-content: center; align-items: flex-start; gap: 3%; padding: 6% 5% 0; }
+/* Traction for a live product, floating bottom-left over the screens */
+.lab__frame--phones { position: relative; }
+.lab__stats {
+  position: absolute; left: 28px; bottom: 28px; z-index: 2;
+  display: grid; gap: 10px; padding: 14px 20px 16px;
+  background: rgb(255 255 255 / .72); color: var(--ink);
+  -webkit-backdrop-filter: blur(16px) saturate(1.3); backdrop-filter: blur(16px) saturate(1.3);
+  border-radius: 20px; box-shadow: 0 0 0 1px rgb(27 28 30 / .06), 0 18px 40px -18px rgb(27 28 30 / .35);
+}
+.lab__stats p { margin: 0; }
+.lab__stats-live { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--muted); letter-spacing: .02em; }
+.lab__stats-row { display: flex; gap: 28px; }
+.lab__stats-row p { display: grid; gap: 2px; }
+.lab__stats strong { font: 600 32px/1 var(--display); letter-spacing: -0.03em; }
+.lab__stats-row .mono { font-size: 11px; color: var(--muted); }
+/* Arrives after the phones have settled */
+.js .lab__frame--phones:not(.is-in) .lab__stats { opacity: 0; }
+.lab__frame--phones.is-in .lab__stats { animation: stats-in .9s cubic-bezier(.22, .9, .3, 1) 1.05s backwards; }
+@keyframes stats-in { from { opacity: 0; transform: translateY(12px); filter: blur(4px); } }
+@media (prefers-reduced-motion: reduce) { .lab__frame--phones .lab__stats { animation: none; opacity: 1; } }
+
 /* Each screenshot sits in an iPhone body: dark bezel, a thin metal edge and side buttons */
 .lab__frame--phones .phone {
   position: relative; flex: none; width: 21%; padding: .9%;
@@ -531,6 +552,10 @@ a.role-mini:hover .role-mini__arrow { transform: translateY(-4px); }
   .browser__bar span { left: 30%; }
   .lab__frame--phones { padding: 20px 12px 0; gap: 6px; }
   .lab__frame--phones .phone { width: 23.5%; padding: 1.2%; }
+  .lab__stats { left: 12px; bottom: 12px; padding: 10px 14px 12px; gap: 6px; border-radius: 14px; }
+  .lab__stats strong { font-size: 20px; }
+  .lab__stats-row { gap: 18px; }
+  .lab__stats-live, .lab__stats-row .mono { font-size: 10px; }
   .lab__frame:hover .phone { transform: none; }
   .lab__frame:hover img, .lab__frame:hover video, .lab__frame:hover .lab__placeholder { transform: none; }
   .lab__caption { flex-direction: column; align-items: flex-start; gap: 10px; }
