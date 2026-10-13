@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <script>if (!/\/$|\.html?$/.test(location.pathname)) { const base = document.createElement('base'); base.href = location.pathname + '/'; document.head.append(base); }</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Pallet Office · Taubat.app</title>
+  <meta name="description" content="The Taubat.app AI agent team as Pokémon in a pixel-art office.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="stage" class="stage">
+    <canvas id="world" aria-label="Isometric island where Claude Code and Codex sessions are Pokémon"></canvas>
+
+    <div class="hud hud-actions">
+      <span id="conn" class="conn" title="Connection">connecting…</span>
+      <button id="musicBtn" type="button" aria-pressed="false" title="Original Pokémon-inspired lo-fi">♫ Play music</button>
+      <label id="musicVolumeControl" class="music-volume" hidden>♫<input id="musicVolume" type="range" min="0" max="100" value="30" aria-label="Music volume"></label>
+      <button id="soundBtn" type="button">🔊 Sound</button>
+      <button id="fullBtn" type="button" hidden>⛶ Full screen</button>
+      <button id="notifyBtn" type="button">🔕 Alerts off</button>
+    </div>
+
+    <section class="hud hud-panel hud-team" aria-label="Project team">
+      <h2>Team <span id="counts"></span></h2>
+      <div id="agents"></div>
+    </section>
+
+    <section class="hud hud-panel hud-activity" aria-label="Activity">
+      <h2>Activity</h2>
+      <ol id="feed" class="feed"></ol>
+    </section>
+
+    <div id="hint" class="hint" hidden>
+      <strong>Nobody's working yet.</strong>
+      <p>Start Claude Code or Codex in any project and its Pokémon walks in.</p>
+    </div>
+  </div>
+
+  <script src="feed.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

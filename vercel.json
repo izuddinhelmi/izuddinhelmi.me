@@ -1,0 +1,5 @@
+{
+  "redirects": [
+    { "source": "/pallete-office", "destination": "/pallete-office/", "permanent": true }
+  ]
+}

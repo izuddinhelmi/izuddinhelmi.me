@@ -41,8 +41,14 @@ class Handler(SimpleHTTPRequestHandler):
     def do_GET(self):
         if self.path == '/__reload':
             return self.stream_reloads()
-        path = self.translate_path(self.path.split('?')[0])
+        url = self.path.split('?')[0]
+        path = self.translate_path(url)
         if os.path.isdir(path):
+            if not url.endswith('/'):  # same as vercel.json: /folder -> /folder/
+                self.send_response(301)
+                self.send_header('Location', url + '/')
+                self.end_headers()
+                return
             path = os.path.join(path, 'index.html')
         if path.endswith('.html') and os.path.isfile(path):
             with open(path, 'rb') as fh:
