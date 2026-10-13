@@ -19,14 +19,29 @@ if (track) {
   // A slide's video plays with sound only while it's the active slide and the Lab is on screen.
   // Browsers keep sound off until the visitor has clicked, tapped or pressed a key somewhere.
   const videos = slides.map((s) => s.querySelector('video'));
-  let active = 0, labOnScreen = false, interacted = false;
+  let active = 0, labOnScreen = false, interacted = false, wantsSound = true;
+  const soundBtns = slides.map((s) => s.querySelector('.lab__sound'));
   const voice = () => videos.forEach((v, j) => {
     if (!v) return;
-    const on = interacted && labOnScreen && j === active;
+    const on = interacted && wantsSound && labOnScreen && j === active;
     v.muted = !on;
     if (on) { v.volume = 0.6; v.play().catch(() => {}); }
+    const btn = soundBtns[j];
+    if (btn) {
+      btn.setAttribute('aria-pressed', String(!v.muted));
+      btn.setAttribute('aria-label', v.muted ? 'Turn sound on' : 'Turn sound off');
+    }
   });
-  ['pointerdown', 'keydown', 'touchstart'].forEach((t) => window.addEventListener(t, () => {
+  // The speaker button turns that video's sound on or off (its click also counts as the unlock gesture)
+  soundBtns.forEach((btn, j) => btn?.addEventListener('click', () => {
+    const v = videos[j];
+    interacted = true;
+    wantsSound = v.muted;
+    if (wantsSound) { active = j; labOnScreen = true; }
+    voice();
+  }));
+  ['pointerdown', 'keydown', 'touchstart'].forEach((t) => window.addEventListener(t, (e) => {
+    if (e.target.closest?.('.lab__sound')) return; // the speaker button handles its own click
     if (!interacted) { interacted = true; voice(); }
   }, { capture: true, passive: true }));
   new IntersectionObserver(([e]) => { labOnScreen = e.isIntersecting; voice(); }, { threshold: 0.5 })
