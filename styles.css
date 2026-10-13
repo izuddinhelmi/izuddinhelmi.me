@@ -143,7 +143,13 @@ ol, ul { padding: 0; list-style: none; }
 .lab__frame:hover img, .lab__frame:hover video, .lab__frame:hover .lab__placeholder { transform: translateY(-10px); }
 .lab__frame--char { background: var(--char); }
 .lab__frame video { display: block; height: auto; object-fit: cover; }
-.lab__frame--peach { background: var(--peach); }
+/* Lab cards: one soft pastel per project */
+.lab__frame--mint { background: #C9DDD5; }
+.lab__frame--butter { background: #EBE1C5; }
+.lab__frame--lilac { background: #D5CEE2; }
+.lab__frame--rose { background: #EBD5D7; }
+.lab__frame--sky { background: #D0DDE9; }
+.lab__frame--peach { background: #ECD8CA; }
 
 /* Desktop slides: the screenshot sits in a minimal browser window resting on the card's bottom edge.
    On hover the window grows to fill the whole card. */
