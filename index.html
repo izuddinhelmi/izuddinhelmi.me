@@ -3,7 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script>document.documentElement.classList.add('js')</script>
+  <script>
+    document.documentElement.classList.add('js');
+    // Pricing by time zone: Malaysia sees RM, everyone else sees USD
+    try { if (!/^Asia\/(Kuala_Lumpur|Kuching)$/.test(Intl.DateTimeFormat().resolvedOptions().timeZone)) document.documentElement.classList.add('intl'); } catch (e) {}
+  </script>
   <title>Izuddin Helmi — Product designer for dashboards, web &amp; mobile apps</title>
   <meta name="description" content="Independent product designer in Kuala Lumpur. Thirteen years designing at Grab, PETRONAS, KATSANA and Jupiter/Meteora. Engagements from RM20,000.">
   <meta property="og:title" content="Izuddin Helmi — Dashboards, web & mobile apps">
@@ -265,7 +269,7 @@
     <section class="services wrap" id="services" aria-labelledby="svc-title">
       <div class="services__head">
         <h2 id="svc-title" class="display-3">Got an app to build?</h2>
-        <p class="services__lede">From a rough idea to a product that’s outgrown its first design. Engagements start at <strong>RM20,000</strong> and usually run <strong>6–10 weeks</strong>, for <strong>web, iOS and Android</strong>. Send a brief and you’ll hear back <strong>within 24 hours</strong>.</p>
+        <p class="services__lede">From a rough idea to a product that’s outgrown its first design. <span class="price-my">Engagements start at <strong>RM20,000</strong> and usually run</span><span class="price-intl">Engagements usually range from <strong>$5,000 to $20,000 USD</strong> and run</span> <strong>6–10 weeks</strong>, for <strong>web, iOS and Android</strong>. Send a brief and you’ll hear back <strong>within 24 hours</strong>.</p>
       </div>
       <ol class="svc">
         <li><span class="svc__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg></span><h3>“We have an idea, not a product yet.”</h3><p>Workshops, user interviews and a clickable prototype you can show investors or your team. 2–3 weeks.</p></li>
@@ -278,7 +282,7 @@
 
     <!-- Contact -->
     <section class="contact wrap" id="contact" aria-labelledby="contact-title">
-      <p class="contact__pre">Have a RM20k+ product problem?</p>
+      <p class="contact__pre"><span class="price-my">Have a RM20k+ product problem?</span><span class="price-intl">Have a $5k+ product problem?</span></p>
       <h2 id="contact-title" class="contact__title"><a href="mailto:hello@izuddinhelmi.me?subject=New%20project">Start a<br>project <span class="arw accent">↗</span></a></h2>
       <div class="contact__row">
         <!-- TODO: make sure this inbox exists (or swap in your real address) -->
