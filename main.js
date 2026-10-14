@@ -96,6 +96,26 @@ const lazyVideos = new IntersectionObserver((entries) => entries.forEach(({ targ
 }), { threshold: 0.1 });
 document.querySelectorAll('video[data-src]').forEach((v) => lazyVideos.observe(v));
 
+// TaubatApp traction, live from taubat.app (cached there for about a minute).
+// The numbers in the HTML are the fallback if the request fails or is slow.
+const stats = document.querySelector('.lab__stats');
+if (stats) {
+  const compact = (n, plus) => n >= 1000
+    ? `${(Math.floor(n / 100) / 10).toFixed(n >= 10000 ? 0 : 1).replace(/\.0$/, '')}k${plus ? '+' : ''}`
+    : `${n}${plus ? '+' : ''}`;
+  const ctrl = new AbortController();
+  setTimeout(() => ctrl.abort(), 5000);
+  fetch('https://www.taubat.app/api/v1/traction', { signal: ctrl.signal })
+    .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+    .then(({ downloads, daily_users: daily }) => {
+      if (!Number.isFinite(downloads) || !Number.isFinite(daily) || downloads <= 0 || daily <= 0) return;
+      stats.querySelector('[data-stat="downloads"]').textContent = compact(downloads, true);
+      stats.querySelector('[data-stat="daily_users"]').textContent = compact(daily, false);
+      stats.setAttribute('aria-label', `TaubatApp: ${downloads.toLocaleString('en')} downloads, ${daily.toLocaleString('en')} daily users`);
+    })
+    .catch(() => {});
+}
+
 // Floating phones: give each its own drift, speed and starting point so they never move in step
 document.querySelectorAll('.lab__frame--phones .phone').forEach((phone) => {
   const dur = 4.5 + Math.random() * 3.5; // seconds per rise or fall
