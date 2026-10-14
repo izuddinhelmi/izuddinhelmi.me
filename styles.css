@@ -210,7 +210,7 @@ ol, ul { padding: 0; list-style: none; }
 .lab__stats-live { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--muted); letter-spacing: .02em; }
 .lab__stats-row { display: flex; gap: 28px; }
 .lab__stats-row p { display: grid; gap: 2px; }
-.lab__stats strong { font: 600 32px/1 var(--display); letter-spacing: -0.03em; }
+.lab__stats strong { font: 600 32px/1 var(--display); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
 .lab__stats-row .mono { font-size: 11px; color: var(--muted); }
 /* Arrives after the phones have settled */
 .js .lab__frame--phones:not(.is-in) .lab__stats { opacity: 0; }
