@@ -150,6 +150,7 @@ ol, ul { padding: 0; list-style: none; }
 .lab__frame--rose { background: #EBD5D7; }
 .lab__frame--sky { background: #D0DDE9; }
 .lab__frame--peach { background: #ECD8CA; }
+.lab__frame--sage { background: #D6DDC8; }
 
 /* Desktop slides: the screenshot sits in a minimal browser window resting on the card's bottom edge.
    On hover the window grows to fill the whole card. */
@@ -233,8 +234,8 @@ ol, ul { padding: 0; list-style: none; }
 }
 .lab__frame--phones .phone::before { left: -2px; top: 18%; height: 7%; } /* volume */
 .lab__frame--phones .phone::after { right: -2px; top: 24%; height: 11%; } /* power */
-.lab__frame--phones .phone img {
-  display: block; width: 100%; aspect-ratio: 440 / 956; object-fit: cover; object-position: top;
+.lab__frame--phones .phone img, .lab__frame--phones .phone video {
+  display: block; width: 100%; height: auto; aspect-ratio: 440 / 956; object-fit: cover; object-position: top;
   border-radius: 12.5% / 5.8%; box-shadow: none; transform: none !important;
 }
 .lab__frame--phones .phone:nth-child(odd) { margin-top: 7%; }
@@ -264,6 +265,45 @@ ol, ul { padding: 0; list-style: none; }
 .lab__frame--phones:hover .phone:nth-child(2) { transition-delay: .05s; }
 .lab__frame--phones:hover .phone:nth-child(3) { transition-delay: .1s; }
 .lab__frame--phones:hover .phone:nth-child(4) { transition-delay: .15s; }
+
+/* Keluar Sekejap: the iPhone Duo opened and held sideways (a wide inner screen with a faint hinge down the
+   middle), with two folded Duos (the outer screen) in front of its lower corners, running off the bottom.
+   Same body, float and arrival as the phones. */
+.lab__frame--duo { display: block; padding: 0; }
+.lab__frame--duo .duo {
+  --i: 0;
+  position: absolute; z-index: 1; top: 13%; left: 50%; width: 51.2%; margin-left: -25.6%; padding: .8%;
+  background: #121314; border-radius: 5.2% / 7.4%;
+  box-shadow:
+    inset 0 0 0 1.5px #4A4C50, inset 0 0 0 3px #1E1F21,
+    0 30px 60px -24px rgb(27 28 30 / .55);
+  animation: phone-float var(--dur, 6s) ease-in-out var(--delay, 0s) infinite alternate;
+  transition: transform .6s cubic-bezier(.2,.7,.2,1);
+}
+.lab__frame--duo .duo img, .lab__frame--duo .duo video {
+  display: block; width: 100%; height: auto; aspect-ratio: 1200 / 844; object-fit: cover;
+  border-radius: 4.4% / 6.3%; box-shadow: none; transform: none !important;
+}
+/* The fold: a hairline of shade where the two halves meet */
+.lab__frame--duo .duo::after {
+  content: ""; position: absolute; top: 1.2%; bottom: 1.2%; left: 50%; width: 1.4%; transform: translateX(-50%);
+  background: linear-gradient(90deg, transparent, rgb(0 0 0 / .16) 48%, rgb(255 255 255 / .06) 54%, transparent);
+  pointer-events: none;
+}
+/* iPhone screen recordings in front of the Duo's corners */
+.lab__frame--duo .phone { position: absolute; z-index: 2; top: 24%; width: 19.5%; margin: 0; }
+.lab__frame--duo .phone:first-child { --i: 1; left: 7%; }
+.lab__frame--duo .phone:last-child { --i: 2; right: 7%; }
+.js .lab__frame--phones:not(.is-in) .duo { opacity: 0; }
+.lab__frame--phones.is-in .duo {
+  animation:
+    phone-in 1.2s cubic-bezier(.22, .9, .3, 1) calc(.15s + var(--i, 0) * .2s) backwards,
+    phone-float var(--dur, 6s) ease-in-out var(--delay, 0s) infinite alternate;
+}
+.lab__frame--phones:hover .duo { transform: translateY(-10px); }
+@media (prefers-reduced-motion: reduce) {
+  .lab__frame--phones .duo, .lab__frame--phones.is-in .duo { animation: none; opacity: 1; }
+}
 .lab__placeholder {
   display: grid; place-content: center; gap: 10px; text-align: center;
   aspect-ratio: 16 / 10; background: var(--bg);

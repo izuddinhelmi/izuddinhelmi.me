@@ -115,7 +115,7 @@ if (stats) {
 }
 
 // Floating phones: give each its own drift, speed and starting point so they never move in step
-document.querySelectorAll('.lab__frame--phones .phone').forEach((phone) => {
+document.querySelectorAll('.lab__frame--phones .phone, .lab__frame--phones .duo').forEach((phone) => {
   const dur = 4.5 + Math.random() * 3.5; // seconds per rise or fall
   phone.style.setProperty('--dur', `${dur.toFixed(2)}s`);
   phone.style.setProperty('--delay', `${(-Math.random() * dur * 2).toFixed(2)}s`);
