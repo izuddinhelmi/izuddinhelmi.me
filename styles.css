@@ -266,13 +266,13 @@ ol, ul { padding: 0; list-style: none; }
 .lab__frame--phones:hover .phone:nth-child(3) { transition-delay: .1s; }
 .lab__frame--phones:hover .phone:nth-child(4) { transition-delay: .15s; }
 
-/* Keluar Sekejap: the iPhone Duo opened and held sideways (a wide inner screen with a faint hinge down the
-   middle), with two folded Duos (the outer screen) in front of its lower corners, running off the bottom.
+/* Keluar Sekejap: the iPhone Duo opened and held sideways on the left (a wide inner screen with a faint hinge
+   down the middle), one iPhone in front of its right edge and a second beside it.
    Same body, float and arrival as the phones. */
 .lab__frame--duo { display: block; padding: 0; }
 .lab__frame--duo .duo {
   --i: 0;
-  position: absolute; z-index: 1; top: 13%; left: 50%; width: 51.2%; margin-left: -25.6%; padding: .8%;
+  position: absolute; z-index: 1; top: 15%; left: 7%; width: 54%; padding: .8%;
   background: #121314; border-radius: 5.2% / 7.4%;
   box-shadow:
     inset 0 0 0 1.5px #4A4C50, inset 0 0 0 3px #1E1F21,
@@ -290,10 +290,16 @@ ol, ul { padding: 0; list-style: none; }
   background: linear-gradient(90deg, transparent, rgb(0 0 0 / .16) 48%, rgb(255 255 255 / .06) 54%, transparent);
   pointer-events: none;
 }
-/* iPhone screen recordings in front of the Duo's corners */
-.lab__frame--duo .phone { position: absolute; z-index: 2; top: 24%; width: 19.5%; margin: 0; }
-.lab__frame--duo .phone:first-child { --i: 1; left: 7%; }
-.lab__frame--duo .phone:last-child { --i: 2; right: 7%; }
+/* iPhone screen recordings: the first overlaps the Duo's right edge, the second sits beside it, a touch higher */
+.lab__frame--phones.lab__frame--duo .phone { position: absolute; z-index: 2; width: 17.2%; margin: 0; }
+.lab__frame--duo .phone:nth-child(2) { top: 27%; left: 55.8%; }
+.lab__frame--duo .phone:nth-child(3) { top: 25.5%; left: 75.5%; }
+@media (max-width: 720px) {
+  .lab__frame--duo .duo { top: 23.5%; left: 4.25%; width: 58%; }
+  .lab__frame--phones.lab__frame--duo .phone { width: 18.5%; }
+  .lab__frame--duo .phone:nth-child(2) { top: 32.5%; left: 56.75%; }
+  .lab__frame--duo .phone:nth-child(3) { top: 31%; left: 77.25%; }
+}
 .js .lab__frame--phones:not(.is-in) .duo { opacity: 0; }
 .lab__frame--phones.is-in .duo {
   animation:
